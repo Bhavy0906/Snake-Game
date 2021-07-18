@@ -39,7 +39,7 @@ function generateFood() {
 
 function main(ctime) {
     window.requestAnimationFrame(main);
-    // console.log(ctime);
+ 
     if ((ctime - lastPaintTime) / 1000 < 1 / speed) {
         return;
     }
@@ -129,7 +129,12 @@ if (hiscore === null) {
     hiScoreCard.innerHTML = 'Hi-Score:' + hiscore;
 }
 
-musicSound.play();
+let playPromise = musicSound.play();
+if (playPromise !== undefined) {
+    playPromise.catch(function(error) {
+        window.addEventListener('keydown', ()=> musicSound.play());
+    });
+  }
 
 music.addEventListener('click', () => {
     moveSound.play();
@@ -174,7 +179,6 @@ sound.addEventListener('click', () => {
 })
 
 window.addEventListener('keydown', e => {
-
     if (e.key === 'ArrowUp' && (inputDir.x || (inputDir.x == 0 && inputDir.y == 0))) {
         moveSound.play();
         inputDir.x = 0;
