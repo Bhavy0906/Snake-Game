@@ -181,6 +181,7 @@ let playPromise = musicSound.play();
 if (playPromise !== undefined) {
     playPromise.catch(function (error) {
         window.addEventListener('keydown', () => musicSound.play());
+        window.addEventListener('touchstart', () => musicSound.play());
     });
 }
 
